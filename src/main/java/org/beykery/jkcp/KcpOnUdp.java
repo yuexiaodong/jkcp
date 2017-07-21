@@ -173,6 +173,8 @@ public class KcpOnUdp
       int n = kcp.receive(bb);
       if (n > 0)
       {
+         //FIXME :这个ByteBuf bb需要注意在适当的时机release，否则会导致可能的内存泄露；
+        //如网络来了大量的数据，而业务处理比较缓慢，则会导致Bytebuf资源耗尽
         this.listerner.handleReceive(bb, this);
         this.lastTime = System.currentTimeMillis();
       } else
